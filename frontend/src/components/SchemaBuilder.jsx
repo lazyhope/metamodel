@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { PlusCircle, Upload, Brain } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import FieldComponent from '@/components/FieldComponent';
 import ImportDialog from '@/components/ImportDialog';
 import { Button } from '@/components/ui/button';
@@ -95,7 +95,7 @@ const SchemaBuilder = () => {
       toast({
         title: "Success",
         description: "JSON imported successfully",
-        variant: "destructive",
+        className: "bg-green-500 border-green-500 text-white",
       });
 
       return true;

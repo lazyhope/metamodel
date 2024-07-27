@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircle, Image, Trash2, Play, Loader } from 'lucide-react';
 import { generateSchemaJSON } from '@/utils/schemaUtils';
-import { CHAT_ROLES, DEFAULT_MODEL_SETTINGS, API_ENDPOINT } from '@/utils/constants';
+import { CHAT_ROLES, DEFAULT_MODEL_SETTINGS } from '@/utils/constants';
 import ChatMessage from './ChatMessage';
 import ModelSettingsDialog from './ModelSettingsDialog';
 import { defineSchema, parseData } from '@/utils/apiClient';
@@ -177,13 +177,13 @@ const ChatComponent = ({ importJson, field = null }) => {
                     setModelSettings={setModelSettings}
                 />
             </div>
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-grow flex flex-col">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-grow flex flex-col overflow-hidden">
                 <TabsList className="grid w-full grid-cols-2 mb-4">
                     <TabsTrigger value="defineSchema">Define Schema</TabsTrigger>
                     <TabsTrigger value="parseData">Parse Data</TabsTrigger>
                 </TabsList>
-                <div className="flex-grow flex flex-col">
-                    <TabsContent value="defineSchema" className="flex-grow flex flex-col data-[state=inactive]:hidden">
+                <div className="flex-grow flex flex-col overflow-hidden">
+                    <TabsContent value="defineSchema" className="flex-grow flex flex-col data-[state=inactive]:hidden overflow-hidden">
                         <div ref={chatContainerRef} className="flex-grow overflow-y-auto mb-4 p-4 border rounded">
                             {memoizedChatMessages}
                             {isLoading && (
@@ -193,7 +193,7 @@ const ChatComponent = ({ importJson, field = null }) => {
                             )}
                         </div>
                     </TabsContent>
-                    <TabsContent value="parseData" className="flex-grow flex flex-col data-[state=inactive]:hidden">
+                    <TabsContent value="parseData" className="flex-grow flex flex-col data-[state=inactive]:hidden overflow-hidden">
                         <div ref={chatContainerRef} className="flex-grow overflow-y-auto mb-4 p-4 border rounded">
                             {memoizedChatMessages}
                             {isLoading && (
