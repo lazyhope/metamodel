@@ -4,6 +4,8 @@ MetaModel is a web app designed to simplify the process of defining and working 
 
 Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](https://github.com/pydantic/pydantic), MetaModel uses a custom JSON schema to create dynamic pydantic models for parsing unstructured text or image inputs.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flazyhope%2Fmetamodel)
+
 ## Features
 
 - **Intuitive Schema Definition:** Define complex data structures with ease using MetaModel's JSON format. Specify data types, constraints, nested schemas, and more. **Or, describe your schema in natural language, and let language models generate it for you!**
