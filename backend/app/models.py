@@ -4,7 +4,7 @@ from litellm import Usage
 from pydantic import BaseModel, Field, SkipValidation
 from typing_extensions import TypedDict
 
-from metamodel import ModelType
+from .metamodel import ModelType
 
 T_Model = TypeVar("T_Model", bound=BaseModel)
 

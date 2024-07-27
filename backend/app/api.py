@@ -2,15 +2,15 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from models import (
+
+from .metamodel import ModelType, to_python_type
+from .models import (
     DefineSchemaRequest,
     DefineSchemaResponse,
     ParseDataRequest,
     ParseDataResponse,
 )
-from utils import get_parsed_data
-
-from metamodel import ModelType, to_python_type
+from .utils import get_parsed_data
 
 router = APIRouter()
 security = HTTPBearer()

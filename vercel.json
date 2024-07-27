@@ -1,0 +1,34 @@
+{
+    "version": 2,
+    "build": {
+        "env": {
+            "VITE_API_URL": "/api"
+        }
+    },
+    "env": {
+        "BACKEND_CORS_ORIGINS": "*"
+    },
+    "builds": [
+        {
+            "src": "frontend/package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "dist"
+            }
+        },
+        {
+            "src": "backend/app/main.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "backend/app/main.py"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "frontend/$1"
+        }
+    ]
+}

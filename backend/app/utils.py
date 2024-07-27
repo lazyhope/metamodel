@@ -4,7 +4,6 @@ from instructor.exceptions import InstructorRetryException
 from instructor.utils import disable_pydantic_error_url
 from litellm import RateLimitError, acompletion
 from litellm.exceptions import LITELLM_EXCEPTION_TYPES
-from models import T_Model
 from pydantic import ValidationError
 from tenacity import (
     AsyncRetrying,
@@ -12,6 +11,8 @@ from tenacity import (
     retry_if_exception_type,
     stop_after_attempt,
 )
+
+from .models import T_Model
 
 disable_pydantic_error_url()
 aclient = instructor.from_litellm(acompletion, mode=instructor.Mode.MD_JSON)
