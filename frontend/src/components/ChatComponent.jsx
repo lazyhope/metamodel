@@ -40,6 +40,12 @@ const ChatComponent = ({ importJson, field = null }) => {
         scrollToBottom();
     }, [currentMessages, scrollToBottom]);
 
+    useEffect(() => {
+        if (field !== null) {
+            setActiveTab('parseData');
+        }
+    }, [field]);
+
     const convertToOpenAIMessage = async ({ role, content }) => {
         if (content.type === 'image') {
             const blob = await fetch(content.image).then(res => res.blob());
@@ -230,10 +236,10 @@ const ChatComponent = ({ importJson, field = null }) => {
                         <Image className="h-4 w-4 mr-2" />
                         Add Image
                     </Button>
-                    <Button 
-                        onClick={handleRun} 
-                        variant="outline" 
-                        className="flex-grow mr-2" 
+                    <Button
+                        onClick={handleRun}
+                        variant="outline"
+                        className="flex-grow mr-2"
                         disabled={isLoading || (activeTab === 'parseData' && field === null)}
                     >
                         <Play className="h-4 w-4 mr-2" />
