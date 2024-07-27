@@ -16,7 +16,7 @@ const ChatComponent = ({ importJson, field = null }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [runMessages, setRunMessages] = useState(false);
 
-    const [isModelSettingsOpen, setIsModelSettingsOpen] = useState(true);
+    const [isModelSettingsOpen, setIsModelSettingsOpen] = useState(false);
     const [modelSettings, setModelSettings] = useState(DEFAULT_MODEL_SETTINGS);
 
     const [activeTab, setActiveTab] = useState('defineSchema');
@@ -179,8 +179,8 @@ const ChatComponent = ({ importJson, field = null }) => {
             </div>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-grow flex flex-col overflow-hidden">
                 <TabsList className="grid w-full grid-cols-2 mb-4">
-                    <TabsTrigger value="defineSchema">Define Schema</TabsTrigger>
-                    <TabsTrigger value="parseData">Parse Data</TabsTrigger>
+                    <TabsTrigger id="define-schema-tab" value="defineSchema">Define Schema</TabsTrigger>
+                    <TabsTrigger id="parse-data-tab" value="parseData">Parse Data</TabsTrigger>
                 </TabsList>
                 <div className="flex-grow flex flex-col overflow-hidden">
                     <TabsContent value="defineSchema" className="flex-grow flex flex-col data-[state=inactive]:hidden overflow-hidden">

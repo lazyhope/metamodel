@@ -106,6 +106,7 @@ const FieldComponent = ({ field, addField, updateField, removeField, nestLevel =
           </div>
         )}
         <Button
+          id={`field-select-button-${field.id}`}
           onClick={() => toggleSelectField(field)}
           variant={isSelected ? BUTTON_VARIANTS.DEFAULT : BUTTON_VARIANTS.OUTLINE}
           size={BUTTON_SIZES.SM}

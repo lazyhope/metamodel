@@ -38,7 +38,7 @@ const ModelSettingsDialog = ({ isModelSettingsOpen, setIsModelSettingsOpen, mode
     return (
         <Dialog open={isModelSettingsOpen} onOpenChange={setIsModelSettingsOpen}>
             <DialogTrigger asChild>
-                <Button className="mr-2" variant="outline" size="sm">
+                <Button id="model-settings-button" className="mr-2" variant="outline" size="sm">
                     <Settings className="mr-2 h-4 w-4" /> Model Settings
                 </Button>
             </DialogTrigger>

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { PlusCircle } from 'lucide-react';
+import Joyride, { STATUS } from "react-joyride";
+import { PlusCircle, BookOpenText } from 'lucide-react';
 import FieldComponent from '@/components/FieldComponent';
 import ImportDialog from '@/components/ImportDialog';
 import { Button } from '@/components/ui/button';
@@ -10,9 +11,45 @@ import { useToast } from "@/components/ui/use-toast";
 
 const SchemaBuilder = () => {
   const { toast } = useToast();
-  const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState([{
+    ...DEFAULT_FIELD,
+    id: Date.now().toString(),
+    type: "model"
+  }]);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [selectedField, setSelectedField] = useState(null);
+  const [isTourOpen, setIsTourOpen] = useState(false);
+
+  const tourSteps = [
+    {
+      target: '#model-settings-button',
+      content: 'Select a model, enter your API key, and adjust generation settings.',
+      disableBeacon: true,
+    },
+    {
+      target: '#schema-editor-panel',
+      content: 'Manually edit your schema here or import an existing one using the Import JSON button.',
+    },
+    {
+      target: '#define-schema-tab',
+      content: 'Generate and apply fields automatically from natural language.',
+    },
+    {
+      target: fields.length > 0 ? `#field-select-button-${fields[0].id}` : "#schema-editor-panel",
+      content: 'Select a field to load it in the chat panel.',
+    },
+    {
+      target: '#parse-data-tab',
+      content: 'Parse data using your selected schema.',
+    }
+  ];
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setIsTourOpen(false);
+    }
+  };
 
   const findFieldById = useCallback((fields, id) => {
     for (const field of fields) {
@@ -116,10 +153,21 @@ const SchemaBuilder = () => {
 
   return (
     <div className="flex h-screen">
+      <Joyride
+        steps={tourSteps}
+        run={isTourOpen}
+        continuous={true}
+        showSkipButton={true}
+        showProgress={true}
+        callback={handleJoyrideCallback}
+      />
       <div className="w-1/2 p-4 overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Schema Builder</h2>
           <div className="flex space-x-2">
+            <Button onClick={() => setIsTourOpen(true)} className="mr-2" variant="outline" size="sm">
+              <BookOpenText className="mr-2 h-4 w-4" /> Start Tour
+            </Button>
             <ImportDialog
               isImportDialogOpen={isImportDialogOpen}
               setIsImportDialogOpen={setIsImportDialogOpen}
@@ -127,18 +175,20 @@ const SchemaBuilder = () => {
             />
           </div>
         </div>
-        {fields.map(field => (
-          <FieldComponent
-            key={field.id}
-            field={field}
-            addField={addField}
-            updateField={updateField}
-            removeField={removeField}
-            parentType={"root"}
-            selectedField={selectedField}
-            toggleSelectField={toggleSelectField}
-          />
-        ))}
+        <div id="schema-editor-panel">
+          {fields.map(field => (
+            <FieldComponent
+              key={field.id}
+              field={field}
+              addField={addField}
+              updateField={updateField}
+              removeField={removeField}
+              parentType={"root"}
+              selectedField={selectedField}
+              toggleSelectField={toggleSelectField}
+            />
+          ))}
+        </div>
         <Button onClick={() => setFields(prev => [...prev, { ...DEFAULT_FIELD, id: Date.now().toString() }])} className="mt-4">
           <PlusCircle className="mr-2 h-4 w-4" /> Add Field
         </Button>
