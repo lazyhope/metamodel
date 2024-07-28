@@ -41,7 +41,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
    ```sh
    cd ../backend
-   echo "BACKEND_CORS_ORIGINS=http://localhost,http://localhost:5173" > .env  # Set the CORS origins separated by commas
+   echo "BACKEND_CORS_ORIGINS=http://localhost,http://localhost:5173" > .env  # Optional: set the CORS origins (separated by commas)
    pip install -r requirements.txt
    ```
 

@@ -108,7 +108,7 @@ const renderDefaultInput = (field, handleInputChange) => {
             checked={isEmptyStringDefault}
             onCheckedChange={handleEmptyStringToggle}
           />
-          <Label htmlFor="defaultToEmptyString">Empty</Label>
+          <Label htmlFor="defaultToEmptyString">Empty String</Label>
         </div>
       )}
     </div>
@@ -121,10 +121,11 @@ const renderDefaultInput = (field, handleInputChange) => {
           <div className="flex items-center space-x-2">
             <Switch
               id="default"
-              checked={field.default === true}
+              checked={field.default === true && !isNoneDefault}
               onCheckedChange={(checked) => handleInputChange('default', checked)}
+              disabled={isNoneDefault}
             />
-            <Label htmlFor="default">{field.default ? 'True' : 'False'}</Label>
+            <Label htmlFor="default">{field.default && !isNoneDefault ? 'True' : 'False'}</Label>
           </div>
           {renderSwitches()}
         </div>
