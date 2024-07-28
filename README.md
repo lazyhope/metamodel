@@ -33,6 +33,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
    ```sh
    cd frontend
+   echo "VITE_API_URL=http://localhost:8000" > .env  # Set the API URL
    npm install
    ```
 
@@ -40,14 +41,8 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
    ```sh
    cd ../backend
+   echo "BACKEND_CORS_ORIGINS=http://localhost,http://localhost:5173" > .env  # Set the CORS origins separated by commas
    pip install -r requirements.txt
-   ```
-
-4. Create a `.env` file in the root directory and add your environment variables:
-
-   ```sh
-   VITE_API_URL=http://localhost:8000
-   BACKEND_CORS_ORIGINS="http://localhost,http://localhost:5173"
    ```
 
 ### Running the Application
@@ -72,18 +67,29 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flazyhope%2Fmetamodel)
 
+For complex schema definitions and parsing, language models may require multiple attempts. Therefore it is recommended to adjust the default `maxDuration` in your Vercel project settings from 10 seconds to 60 seconds, in order to prevent timeouts during retry attempts.
+
 ## Docker Deployment
 
 To deploy the application using Docker:
 
 1. Ensure Docker and Docker Compose are installed on your system.
-2. Run the following command in the root directory:
+2. Edit `.env` file in the root directory and set your environment variables, for example:
 
    ```sh
-   docker-compose up --build
+   VITE_API_URL=http://localhost:8000
+   BACKEND_CORS_ORIGINS="http://localhost,http://localhost:5173"
    ```
 
-3. Access the application at `http://localhost:80`.
+3. Run the following command in the root directory:
+
+   ```sh
+   docker compose up --build
+   ```
+
+4. Access the application at `http://localhost:80`.
+
+It is also possible to deploy frontend and backend separately using their respective Dockerfile and environment variables.
 
 ## Usage
 
