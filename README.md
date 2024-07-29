@@ -1,5 +1,7 @@
 # MetaModel
 
+https://github.com/user-attachments/assets/bb900b4e-b231-472a-b9f9-98c802dd7210
+
 MetaModel is a web app designed to simplify the process of defining and working with complex data structures.
 
 Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](https://github.com/pydantic/pydantic), MetaModel uses a custom JSON schema to create dynamic pydantic models for parsing unstructured text or image inputs.
