@@ -23,6 +23,8 @@ const ChatComponent = ({ importJson, field = null }) => {
     const [defineSchemaMessages, setDefineSchemaMessages] = useState([]);
     const [parseDataMessages, setParseDataMessages] = useState([]);
 
+    const [isDragging, setIsDragging] = useState(false);
+
     const imageInputRef = useRef(null);
     const chatContainerRef = useRef(null);
     const messageInputRef = useRef(null);
@@ -172,6 +174,54 @@ const ChatComponent = ({ importJson, field = null }) => {
         ));
     }, [defineSchemaMessages, parseDataMessages, activeTab]);
 
+    const handleDragOver = useCallback((e) => {
+        e.preventDefault();
+        setIsDragging(true);
+    }, []);
+
+    const handleDragLeave = useCallback((e) => {
+        e.preventDefault();
+        setIsDragging(false);
+    }, []);
+
+    const handleDrop = useCallback((e) => {
+        e.preventDefault();
+        setIsDragging(false);
+        const files = e.dataTransfer.files;
+        if (files.length > 0 && files[0].type.startsWith('image/')) {
+            const newMessage = {
+                id: Date.now(),
+                role: CHAT_ROLES.USER,
+                content: { type: 'image', image: URL.createObjectURL(files[0]) }
+            };
+            currentMessageSetter(prev => [...prev, newMessage]);
+        }
+    }, [currentMessageSetter]);
+
+    const renderChatContent = (tabValue) => (
+        <div className="flex-grow flex flex-col overflow-hidden relative">
+            <div
+                ref={chatContainerRef}
+                className={`flex-grow overflow-y-auto mb-4 p-4 border rounded ${isDragging ? 'bg-gray-100' : ''}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+            >
+                {memoizedChatMessages}
+                {isLoading && (
+                    <div className="flex justify-center items-center mt-4">
+                        <Loader className="h-6 w-6 animate-spin" />
+                    </div>
+                )}
+            </div>
+            {isDragging && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 pointer-events-none">
+                    <p className="text-lg font-semibold">Drop image here</p>
+                </div>
+            )}
+        </div>
+    );
+
     return (
         <div className="h-full flex flex-col">
             <div className="flex justify-between items-center mb-4">
@@ -188,28 +238,12 @@ const ChatComponent = ({ importJson, field = null }) => {
                     <TabsTrigger id="define-schema-tab" value="defineSchema">Define Schema</TabsTrigger>
                     <TabsTrigger id="parse-data-tab" value="parseData">Parse Data</TabsTrigger>
                 </TabsList>
-                <div className="flex-grow flex flex-col overflow-hidden">
-                    <TabsContent value="defineSchema" className="flex-grow flex flex-col data-[state=inactive]:hidden overflow-hidden">
-                        <div ref={chatContainerRef} className="flex-grow overflow-y-auto mb-4 p-4 border rounded">
-                            {memoizedChatMessages}
-                            {isLoading && (
-                                <div className="flex justify-center items-center mt-4">
-                                    <Loader className="h-6 w-6 animate-spin" />
-                                </div>
-                            )}
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="parseData" className="flex-grow flex flex-col data-[state=inactive]:hidden overflow-hidden">
-                        <div ref={chatContainerRef} className="flex-grow overflow-y-auto mb-4 p-4 border rounded">
-                            {memoizedChatMessages}
-                            {isLoading && (
-                                <div className="flex justify-center items-center mt-4">
-                                    <Loader className="h-6 w-6 animate-spin" />
-                                </div>
-                            )}
-                        </div>
-                    </TabsContent>
-                </div>
+                <TabsContent value="defineSchema" className="flex-grow flex flex-col data-[state=inactive]:hidden overflow-hidden">
+                    {renderChatContent('defineSchema')}
+                </TabsContent>
+                <TabsContent value="parseData" className="flex-grow flex flex-col data-[state=inactive]:hidden overflow-hidden">
+                    {renderChatContent('parseData')}
+                </TabsContent>
             </Tabs>
             <div className="flex flex-col">
                 <div className="flex mb-2">
