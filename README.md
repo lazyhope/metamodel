@@ -2,9 +2,9 @@
 
 https://github.com/user-attachments/assets/bb900b4e-b231-472a-b9f9-98c802dd7210
 
-MetaModel is a web application that streamlines the extraction and generation of structured data from unstructured text or images. It leverages advanced language models to parse information according to a custom JSON schema, which can be defined either in natural language or through a user-friendly visual interface.
+MetaModel is a web application that streamlines the extraction and generation of structured data from unstructured text or images. It leverages advanced language models to parse information according to the provided schema, which can be defined either in plain language or through a user-friendly visual interface.
 
-Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](https://github.com/pydantic/pydantic), MetaModel creates dynamic Pydantic models for constraining and validating data using a custom JSON schema. It also integrates with [litellm](https://github.com/BerriAI/litellm) to support language models from various providers.
+Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](https://github.com/pydantic/pydantic), MetaModel creates dynamic Pydantic models for constraining and validating data. It also integrates with [litellm](https://github.com/BerriAI/litellm) to support language models from various providers.
 
 ## Features
 
