@@ -21,7 +21,6 @@ const CodeBlock = ({ language, code }) => {
         });
     };
 
-    // Function to truncate long lines
     const truncateLine = (line) => {
         return line.length > MAX_CODE_LINE_LENGTH ? line.slice(0, MAX_CODE_LINE_LENGTH) + '...' : line;
     };

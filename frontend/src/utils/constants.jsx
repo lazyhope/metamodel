@@ -1,6 +1,3 @@
-// constants.js
-
-// Field types
 export const FIELD_TYPES = [
     'model',
     'string',
@@ -13,18 +10,15 @@ export const FIELD_TYPES = [
     'annotated',
 ];
 
-// Sequence constraints
 export const SEQUENCE_CONSTRAINTS = [
     'min_length',
     'max_length',
 ];
 
-// String constraints
 export const STRING_CONSTRAINTS = [
     'pattern'
 ];
 
-// Numeric constraints (for both integer and decimal)
 export const NUMERIC_CONSTRAINTS = [
     'gt',
     'ge',
@@ -33,7 +27,6 @@ export const NUMERIC_CONSTRAINTS = [
     'multiple_of'
 ];
 
-// Additional decimal constraints
 export const DECIMAL_CONSTRAINTS = [
     'allow_inf_nan',
     'max_digits',
@@ -52,19 +45,16 @@ export const TYPE_CONSTRAINTS = {
     model: []
 };
 
-// API endpoint (placeholder)
 export const API_ENDPOINT = import.meta.env.VITE_API_URL;
 
 // Maximum length for code truncation
 export const MAX_CODE_LINE_LENGTH = 200;
 
-// Chat roles
 export const CHAT_ROLES = {
     USER: 'user',
     ASSISTANT: 'assistant'
 };
 
-// Button variants
 export const BUTTON_VARIANTS = {
     DEFAULT: 'default',
     DESTRUCTIVE: 'destructive',
@@ -74,7 +64,6 @@ export const BUTTON_VARIANTS = {
     LINK: 'link'
 };
 
-// Button sizes
 export const BUTTON_SIZES = {
     DEFAULT: 'default',
     SM: 'sm',
@@ -82,12 +71,10 @@ export const BUTTON_SIZES = {
     ICON: 'icon'
 };
 
-// Timeout durations
 export const TIMEOUTS = {
     COPY_FEEDBACK: 2000 // 2 seconds
 };
 
-// Default field properties
 export const DEFAULT_FIELD = {
     name: '',
     type: 'string',
@@ -96,13 +83,10 @@ export const DEFAULT_FIELD = {
     enums: []
 };
 
-// Import dialog placeholder text
 export const IMPORT_DIALOG_PLACEHOLDER = 'Paste your JSON schema here...';
 
-// Model options
 export const MODEL_OPTIONS = ['claude-3-5-sonnet-20240620', 'gpt-4o', 'gpt-4o-mini', 'groq/llama-3.1-70b-versatile', 'groq/llama-3.1-8b-instant', 'gemini/gemini-1.5-pro-latest', 'gemini/gemini-1.5-flash', 'Custom Model'];
 
-// Default model settings
 export const DEFAULT_MODEL_SETTINGS = {
     model: 'gemini/gemini-1.5-flash',
     temperature: 0,

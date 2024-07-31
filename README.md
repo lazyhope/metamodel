@@ -2,14 +2,14 @@
 
 https://github.com/user-attachments/assets/bb900b4e-b231-472a-b9f9-98c802dd7210
 
-MetaModel is a web app designed to simplify the process of defining and working with complex data structures.
+MetaModel is a web application that streamlines the extraction and generation of structured data from unstructured text or images. It leverages advanced language models to parse information according to a custom JSON schema, which can be defined either in natural language or through a user-friendly visual interface.
 
-Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](https://github.com/pydantic/pydantic), MetaModel uses a custom JSON schema to create dynamic pydantic models for parsing unstructured text or image inputs.
+Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](https://github.com/pydantic/pydantic), MetaModel creates dynamic Pydantic models for constraining and validating data using a custom JSON schema. It also integrates with [litellm](https://github.com/BerriAI/litellm) to support language models from various providers.
 
 ## Features
 
-- **Intuitive Schema Definition:** Define complex data structures with ease using MetaModel's JSON format. Specify data types, constraints, nested schemas, and more. **Or, describe your schema in natural language, and let language models generate it for you!**
-- **LLM-Powered Data Extraction:** Parse text or images into structured data using LLMs from various providers, thanks to [litellm](https://github.com/BerriAI/litellm).
+- **Intuitive Schema Definition:** Easily define complex data structures using MetaModel's JSON format. Specify data types, constraints, nested schemas, and more. **Or, describe your schema in plain language, and let language models generate it for you!**
+- **LLM-Powered Data Extraction:** Parse text or images into structured data using language models from various providers, supported by [litellm](https://github.com/BerriAI/litellm).
 - **Built-in Validation:** Ensure data integrity with Pydantic's built-in data validation against your schema definition.
 - **Interactive Web Interface:**  A user-friendly interface allows you to easily create, edit, and test your schemas.
 - **Streamlined Workflow:**  Seamlessly integrate data extraction into your applications and workflows using MetaModel's backend API. Define schemas, send parse requests, and receive structured data effortlessly.
@@ -69,7 +69,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flazyhope%2Fmetamodel)
 
-For complex schema definitions and parsing, language models may require multiple attempts. Therefore it is recommended to adjust the default `maxDuration` in your Vercel project settings from 10 seconds to 60 seconds, in order to prevent timeouts during retry attempts.
+For complex schema definitions and parsing, language models may require multiple attempts. Adjust the default `maxDuration` in your Vercel project settings from 10 seconds to 60 seconds to prevent timeouts during retry attempts.
 
 ## Docker Deployment
 
@@ -95,9 +95,9 @@ It is also possible to deploy frontend and backend separately using their respec
 
 ## Usage
 
-1. Choose language models and enter your API key.
-2. Customize other settings for optimal performance.
-3. Use the schema builder interface to create your data structure.
+1. Choose language models and enter your API key in the settings.
+2. Customize other parameters for optimal performance.
+3. Use the schema builder interface to create your own data structure.
 4. Interact with the AI chat to refine your schema or parse data.
 5. Import existing JSON schemas or export your created schemas.
 
