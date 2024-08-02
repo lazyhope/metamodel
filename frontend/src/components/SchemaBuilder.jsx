@@ -75,11 +75,18 @@ const SchemaBuilder = () => {
     }
   }, [fields, selectedField, findFieldById]);
 
-  const addField = useCallback((id) => {
+  const addField = useCallback((id, subFieldType = null) => {
     const addSubField = (fields) => {
       return fields.map(field => {
         if (field.id === id) {
-          return { ...field, fields: [...field.fields, { ...DEFAULT_FIELD, id: Date.now().toString() }] };
+          const newField = { ...DEFAULT_FIELD, id: Date.now().toString() };
+          if (field.type === 'dict' && (subFieldType === 'key' || subFieldType === 'value')) {
+            newField.name = subFieldType;
+            if (subFieldType === 'key') {
+              return { ...field, fields: [newField, ...field.fields] };
+            }
+          }
+          return { ...field, fields: [...field.fields, newField] };
         }
         if (field.fields) {
           return { ...field, fields: addSubField(field.fields) };
@@ -133,6 +140,7 @@ const SchemaBuilder = () => {
         title: "Success",
         description: "JSON imported successfully",
         className: "bg-green-500 border-green-500 text-white",
+        variant: "destructive",
       });
 
       return true;

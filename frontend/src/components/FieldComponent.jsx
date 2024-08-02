@@ -30,6 +30,7 @@ const FieldComponent = ({ field, addField, updateField, removeField, nestLevel =
       case 'model':
       case 'list':
       case 'set':
+      case 'dict':
         return (
           <div className="mt-2">
             {field.fields && field.fields.map(subField => (
@@ -45,16 +46,39 @@ const FieldComponent = ({ field, addField, updateField, removeField, nestLevel =
                 toggleSelectField={toggleSelectField}
               />
             ))}
-            <Button
-              onClick={() => addField(field.id)}
-              size={BUTTON_SIZES.SM}
-              className="mt-2"
-            >
-              <PlusCircle className="mr-2 h-4 w-4" />
-              {field.type === 'annotated' || field.type === 'list' || field.type === 'set'
-                ? 'Add Item Type'
-                : 'Add Field'}
-            </Button>
+            {field.type === 'dict' ? (
+              <div className="flex space-x-2 mt-2">
+                {!field.fields.some(f => f.name === 'key') && (
+                  <Button
+                    onClick={() => addField(field.id, 'key')}
+                    size={BUTTON_SIZES.SM}
+                  >
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Add Key Type
+                  </Button>
+                )}
+                {!field.fields.some(f => f.name === 'value') && (
+                  <Button
+                    onClick={() => addField(field.id, 'value')}
+                    size={BUTTON_SIZES.SM}
+                  >
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Add Value Type
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <Button
+                onClick={() => addField(field.id)}
+                size={BUTTON_SIZES.SM}
+                className="mt-2"
+              >
+                <PlusCircle className="mr-2 h-4 w-4" />
+                {field.type === 'annotated' || field.type === 'list' || field.type === 'set'
+                  ? 'Add Item Type'
+                  : 'Add Field'}
+              </Button>
+            )}
           </div>
         );
       default:
@@ -65,7 +89,7 @@ const FieldComponent = ({ field, addField, updateField, removeField, nestLevel =
   return (
     <div className={`mb-4 p-4 border rounded ${nestLevel > 0 ? 'ml-4' : ''} ${isSelected ? 'border-blue-500 bg-blue-50' : ''}`}>
       <div className="flex items-center mb-2">
-        {(field.type === 'annotated' || field.type === 'model' || field.type === 'list' || field.type === 'set') && (
+        {(field.type === 'annotated' || field.type === 'model' || field.type === 'list' || field.type === 'set' || field.type === 'dict') && (
           <Button
             onClick={() => setIsExpanded(!isExpanded)}
             variant={BUTTON_VARIANTS.GHOST}
@@ -81,6 +105,7 @@ const FieldComponent = ({ field, addField, updateField, removeField, nestLevel =
             onChange={(e) => updateField(field.id, 'name', e.target.value)}
             placeholder="Field name"
             className="w-1/4 mr-2"
+            disabled={parentType === 'dict'}
           />
         )}
         <Select
@@ -96,7 +121,7 @@ const FieldComponent = ({ field, addField, updateField, removeField, nestLevel =
             ))}
           </SelectContent>
         </Select>
-        {!['annotated', 'list', 'set'].includes(parentType) && (
+        {!['annotated', 'list', 'set'].includes(parentType) || (parentType === 'dict' && field.name !== 'key')  && (
           <div className="flex items-center space-x-2 mr-2">
             <Switch
               checked={field.optional}

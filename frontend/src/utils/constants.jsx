@@ -7,6 +7,7 @@ export const FIELD_TYPES = [
     'enum',
     'list',
     'set',
+    'dict',
     'annotated',
 ];
 
@@ -41,6 +42,7 @@ export const TYPE_CONSTRAINTS = {
     enum: [],
     list: SEQUENCE_CONSTRAINTS,
     set: SEQUENCE_CONSTRAINTS,
+    dict: SEQUENCE_CONSTRAINTS,
     annotated: [],
     model: []
 };

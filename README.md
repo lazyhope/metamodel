@@ -10,7 +10,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
 - **Intuitive Schema Definition:** Easily define complex data structures using MetaModel's JSON format. Specify data types, constraints, nested schemas, and more. **Or, describe your schema in plain language, and let language models generate it for you!**
 - **LLM-Powered Data Extraction:** Parse text or images into structured data using language models from various providers, supported by [litellm](https://github.com/BerriAI/litellm).
-- **Built-in Validation:** Ensure data integrity with Pydantic's built-in data validation against your schema definition.
+- **Built-in Validation:** Ensure data integrity with Pydantic's built-in data validation against your schema constraints.
 - **Interactive Web Interface:**  A user-friendly interface allows you to easily create, edit, and test your schemas.
 - **Streamlined Workflow:**  Seamlessly integrate data extraction into your applications and workflows using MetaModel's backend API. Define schemas, send parse requests, and receive structured data effortlessly.
 
@@ -104,6 +104,5 @@ It is also possible to deploy frontend and backend separately using their respec
 ## TODO
 
 - Allows metamodel schema export
-- Add `dict` type support
 - Add documentation for API endpoints
 - Add tests

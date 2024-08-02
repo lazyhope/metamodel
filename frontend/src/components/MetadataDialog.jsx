@@ -163,6 +163,7 @@ const renderDefaultInput = (field, handleInputChange) => {
         </div>
       );
     case 'model':
+    case 'dict':
       return null;
     case 'string':
     case 'annotated':

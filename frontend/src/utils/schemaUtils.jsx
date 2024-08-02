@@ -39,8 +39,8 @@ export const generateJSON = (field) => {
         fieldType = {
             'type': field.fields && (
                 (field.fields.length === 1)
-                ? generateJSON(field.fields[0])
-                : field.fields.map(generateJSON)
+                    ? generateJSON(field.fields[0])
+                    : field.fields.map(generateJSON)
             )
         };
     } else if (field.type === 'list' || field.type === 'set') {
@@ -49,6 +49,14 @@ export const generateJSON = (field) => {
             fieldType.item_type = field.fields.length === 1
                 ? generateJSON(field.fields[0])
                 : field.fields.map(generateJSON);
+        }
+    } else if (field.type === 'dict') {
+        fieldType = { key_type: null, value_type: null };
+        if (field.fields) {
+            const keyField = field.fields.find(f => f.name === 'key');
+            const valueField = field.fields.find(f => f.name === 'value');
+            if (keyField) fieldType.key_type = generateJSON(keyField);
+            if (valueField) fieldType.value_type = generateJSON(valueField);
         }
     }
 
@@ -68,7 +76,7 @@ export const generateSchemaJSON = (field) => {
         fields: {
             [field.name || 'field']: fieldJSON
         }
-    };
+    }
 }
 
 export const convertJSONToField = (inputJSON) => {
@@ -102,7 +110,7 @@ export const convertJSONToField = (inputJSON) => {
     }
     else if (typeToCheck.name !== undefined && typeToCheck.fields !== undefined) {
         field.type = 'model';
-        field.fields = Object.entries(typeToCheck.fields).map(([name, field]) => convertJSONToField({ ...field, name }));
+        field.fields = Object.entries(typeToCheck.fields).map(([name, field]) => convertJSONToField(wrapFieldData(field, name)));
     }
     else if (typeToCheck.array_type !== undefined && ['list', 'set'].includes(typeToCheck.array_type)) {
         field.type = typeToCheck.array_type;
@@ -112,8 +120,18 @@ export const convertJSONToField = (inputJSON) => {
                 : [convertJSONToField(typeToCheck.item_type)];
         }
     }
+    else if (typeToCheck.key_type !== undefined || typeToCheck.value_type !== undefined) {
+        field.type = 'dict';
+        field.fields = [];
+        if (typeToCheck.key_type !== undefined) {
+            field.fields.push(convertJSONToField(wrapFieldData(typeToCheck.key_type, 'key')));
+        }
+        if (typeToCheck.value_type !== undefined) {
+            field.fields.push(convertJSONToField(wrapFieldData(typeToCheck.value_type, 'value')));
+        }
+    }
     else {
-        throw new Error(`Unknown type: ${typeToCheck}`);
+        throw new Error(`Unknown type: ${JSON.stringify(typeToCheck)}`);
     }
 
     TYPE_CONSTRAINTS[field.type].forEach(constraint => {
@@ -121,4 +139,16 @@ export const convertJSONToField = (inputJSON) => {
     });
 
     return field;
+};
+
+// Helper function to wrap new field data with name correctly
+const wrapFieldData = (field, name) => {
+    if (typeof field === 'string') {
+        return { type: field, name };
+    } else if (Array.isArray(field)) {
+        return { type: field, name };
+    } else if (typeof field === 'object') {
+        return { ...field, name };
+    }
+    throw new Error(`Invalid field data: ${JSON.stringify(field)}`);
 };
