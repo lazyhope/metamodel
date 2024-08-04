@@ -103,6 +103,5 @@ It is also possible to deploy frontend and backend separately using their respec
 
 ## TODO
 
-- Allows metamodel schema export
 - Add documentation for API endpoints
 - Add tests

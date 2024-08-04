@@ -87,7 +87,17 @@ export const DEFAULT_FIELD = {
 
 export const IMPORT_DIALOG_PLACEHOLDER = 'Paste your JSON schema here...';
 
-export const MODEL_OPTIONS = ['claude-3-5-sonnet-20240620', 'gpt-4o', 'gpt-4o-mini', 'groq/llama-3.1-70b-versatile', 'groq/llama-3.1-8b-instant', 'gemini/gemini-1.5-pro-latest', 'gemini/gemini-1.5-flash', 'Custom Model'];
+export const MODEL_OPTIONS = [
+    'claude-3-5-sonnet-20240620',
+    'fireworks_ai/accounts/fireworks/models/llama-v3p1-405b-instruct',
+    'gemini/gemini-1.5-flash',
+    'gemini/gemini-1.5-pro-exp-0801',
+    'gpt-4o',
+    'gpt-4o-mini',
+    'groq/llama-3.1-70b-versatile',
+    'groq/llama-3.1-8b-instant',
+    'Custom Model',
+]
 
 export const DEFAULT_MODEL_SETTINGS = {
     model: 'gemini/gemini-1.5-flash',

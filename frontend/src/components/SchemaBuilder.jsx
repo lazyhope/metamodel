@@ -1,13 +1,20 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Joyride, { STATUS } from "react-joyride";
-import { PlusCircle, BookOpenText } from 'lucide-react';
+import { PlusCircle, BookOpenText, FileJson } from 'lucide-react';
 import FieldComponent from '@/components/FieldComponent';
 import ImportDialog from '@/components/ImportDialog';
 import { Button } from '@/components/ui/button';
 import { DEFAULT_FIELD } from '@/utils/constants';
-import ChatComponent from './ChatComponent';
-import { convertJSONToField } from '@/utils/schemaUtils';
+import { convertJSONToField, generateJSON } from '@/utils/schemaUtils';
 import { useToast } from "@/components/ui/use-toast";
+import ChatComponent from './ChatComponent';
+import CodeBlock from "./CodeBlock"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const SchemaBuilder = () => {
   const { toast } = useToast();
@@ -19,6 +26,7 @@ const SchemaBuilder = () => {
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [selectedField, setSelectedField] = useState(null);
   const [isTourOpen, setIsTourOpen] = useState(false);
+  const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
 
   const tourSteps = [
     {
@@ -136,6 +144,7 @@ const SchemaBuilder = () => {
       const newField = convertJSONToField(jsonObject);
 
       setFields(prev => [...prev, newField]);
+      setSelectedField(newField);
       toast({
         title: "Success",
         description: "JSON imported successfully",
@@ -159,6 +168,12 @@ const SchemaBuilder = () => {
     setSelectedField(prevSelected => prevSelected?.id === field.id ? null : field);
   }, []);
 
+  const handleExportJson = () => {
+    if (selectedField) {
+      setIsExportDialogOpen(true);
+    }
+  };
+
   return (
     <div className="flex h-screen">
       <Joyride
@@ -181,6 +196,15 @@ const SchemaBuilder = () => {
               setIsImportDialogOpen={setIsImportDialogOpen}
               importJson={importJson}
             />
+            <Button
+              onClick={handleExportJson}
+              disabled={!selectedField}
+              className="mr-2"
+              variant="outline"
+              size="sm"
+            >
+              <FileJson className="mr-2 h-4 w-4" /> Export JSON
+            </Button>
           </div>
         </div>
         <div id="schema-editor-panel">
@@ -207,6 +231,17 @@ const SchemaBuilder = () => {
           field={selectedField}
         />
       </div>
+      <Dialog open={isExportDialogOpen} onOpenChange={setIsExportDialogOpen}>
+        <DialogContent className="sm:max-w-[800px]">
+          <DialogHeader>
+            <DialogTitle>Exported JSON</DialogTitle>
+          </DialogHeader>
+          <CodeBlock
+            code={selectedField ? JSON.stringify(generateJSON(selectedField), null, 2) : ''}
+            language="json"
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
