@@ -101,7 +101,10 @@ It is also possible to deploy frontend and backend separately using their respec
 4. Interact with the AI chat to refine your schema or parse data.
 5. Import existing JSON schemas or export your created schemas.
 
+## API Documentation
+
+[Swagger UI](https://metamodel.vercel.app/docs)
+
 ## TODO
 
-- Add documentation for API endpoints
 - Add tests

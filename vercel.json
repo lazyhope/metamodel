@@ -27,6 +27,10 @@
             "dest": "backend/app/main.py"
         },
         {
+            "src": "/(health|docs|openapi\\.json)",
+            "dest": "backend/app/main.py"
+        },
+        {
             "src": "/(.*)",
             "dest": "frontend/$1"
         }
