@@ -3,7 +3,7 @@ pydantic
 uvicorn
 fastapi-slim
 openai
-litellm==1.43.6
+litellm
 tenacity
 instructor==1.3.5
 pytest

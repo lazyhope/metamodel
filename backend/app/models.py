@@ -1,6 +1,7 @@
 from typing import Generic, Literal, TypeVar
 
 from litellm import Usage
+from openai.types.completion_usage import CompletionUsage
 from pydantic import BaseModel, Field, SkipValidation
 from typing_extensions import TypedDict
 
@@ -43,7 +44,7 @@ class DefineSchemaRequest(BaseModel):
 
 class DefineSchemaResponse(BaseModel):
     data: ModelType
-    usage: Usage
+    usage: Usage | CompletionUsage
 
     model_config = {
         "json_schema_extra": {
@@ -132,7 +133,7 @@ class ParseDataRequest(BaseModel):
 
 class ParseDataResponse(BaseModel, Generic[T_Model]):
     data: SkipValidation[T_Model]
-    usage: Usage
+    usage: Usage | CompletionUsage
 
     model_config = {
         "json_schema_extra": {
