@@ -89,7 +89,7 @@ export const IMPORT_DIALOG_PLACEHOLDER = 'Paste your JSON schema here...';
 
 export const MODEL_OPTIONS = [
     'claude-3-5-sonnet-20240620',
-    'gemini/gemini-1.5-flash-002',
+    'gemini/gemini-2.0-flash-exp',
     'gemini/gemini-1.5-pro-002',
     'gpt-4o',
     'gpt-4o-mini',
@@ -97,7 +97,7 @@ export const MODEL_OPTIONS = [
 ]
 
 export const DEFAULT_MODEL_SETTINGS = {
-    model: 'gemini/gemini-1.5-pro-002',
+    model: 'gemini/gemini-2.0-flash-exp',
     temperature: 0,
     max_tokens: 4096,
     max_attempts: 3,

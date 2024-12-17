@@ -5,5 +5,5 @@ fastapi-slim
 openai
 litellm
 tenacity
-instructor==1.3.5
+instructor
 pytest
