@@ -5,8 +5,24 @@ const apiClient = axios.create({
   baseURL: API_ENDPOINT,
 });
 
-export const defineSchema = async ({ messages, model, temperature, max_tokens, max_attempts, apiKey }) => {
+const handleRequest = async (requestFn) => {
   try {
+    return await requestFn();
+  } catch (error) {
+    if (error.response?.status === 500 &&
+      error.response?.data?.detail?.includes('Event loop is closed')) {
+      try {
+        return await requestFn();
+      } catch (retryError) {
+        throw retryError.response ? retryError.response.data : retryError.message;
+      }
+    }
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+export const defineSchema = async ({ messages, model, temperature, max_tokens, max_attempts, apiKey }) => {
+  return handleRequest(async () => {
     const response = await apiClient.post('/define', {
       messages,
       model,
@@ -19,13 +35,11 @@ export const defineSchema = async ({ messages, model, temperature, max_tokens, m
       },
     });
     return response.data;
-  } catch (error) {
-    throw error.response ? error.response.data : error.message;
-  }
+  });
 };
 
 export const parseData = async ({ messages, schema, model, temperature, max_tokens, max_attempts, apiKey }) => {
-  try {
+  return handleRequest(async () => {
     const response = await apiClient.post('/parse', {
       messages,
       schema,
@@ -39,7 +53,5 @@ export const parseData = async ({ messages, schema, model, temperature, max_toke
       },
     });
     return response.data;
-  } catch (error) {
-    throw error.response ? error.response.data : error.message;
-  }
+  });
 };
