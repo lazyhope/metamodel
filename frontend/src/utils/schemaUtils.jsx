@@ -109,6 +109,7 @@ export const convertJSONToField = (inputJSON) => {
         field.enums = typeToCheck.enums || [];
     }
     else if (typeToCheck.name !== undefined && typeToCheck.fields !== undefined) {
+        field.name = typeToCheck.name;
         field.type = 'model';
         field.fields = Object.entries(typeToCheck.fields).map(([name, field]) => convertJSONToField(wrapFieldData(field, name)));
     }
