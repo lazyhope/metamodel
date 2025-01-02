@@ -9,6 +9,7 @@ import ModelSettingsDialog from './ModelSettingsDialog';
 import { defineSchema, parseData } from '@/utils/apiClient';
 import { useToast } from "@/components/ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ApiStatusBadge from './ApiStatusBadge';
 
 const ChatComponent = ({ importJson, field = null }) => {
     const { toast } = useToast();
@@ -225,7 +226,10 @@ const ChatComponent = ({ importJson, field = null }) => {
     return (
         <div className="h-full flex flex-col">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Chat</h2>
+                <div className="flex items-center gap-2">
+                    <h2 className="text-2xl font-bold">Chat</h2>
+                    <ApiStatusBadge />
+                </div>
                 <ModelSettingsDialog
                     isModelSettingsOpen={isModelSettingsOpen}
                     setIsModelSettingsOpen={setIsModelSettingsOpen}

@@ -43,3 +43,12 @@ export const parseData = async ({ messages, schema, model, temperature, max_toke
     throw error.response ? error.response.data : error.message;
   }
 };
+
+export const checkHealth = async () => {
+  try {
+    await apiClient.get('/health');
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
