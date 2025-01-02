@@ -65,11 +65,9 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
 3. Open your browser and navigate to `http://localhost:5173` to use.
 
-## Deploy with Vercel
+## Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flazyhope%2Fmetamodel)
-
-For complex schema definitions and parsing, language models may require multiple attempts. Adjust the default `maxDuration` in your Vercel project settings from 10 seconds to 60 seconds to prevent timeouts during retry attempts.
+See [frontend/README.md](frontend/README.md)
 
 ## Docker Deployment
 
@@ -104,7 +102,3 @@ It is also possible to deploy frontend and backend separately using their respec
 ## API Documentation
 
 [Swagger UI](https://metamodel.vercel.app/docs)
-
-## TODO
-
-- Add tests
