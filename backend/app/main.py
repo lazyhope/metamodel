@@ -13,16 +13,17 @@ async def health_check():
     return {"status": "OK"}
 
 
-BACKEND_CORS_ORIGINS = os.getenv("BACKEND_CORS_ORIGINS")
-if BACKEND_CORS_ORIGINS:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=[
-            str(origin).strip("/") for origin in BACKEND_CORS_ORIGINS.split(",")
-        ],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        origin.rstrip("/")
+        for origin in os.getenv("BACKEND_CORS_ORIGINS", "").split(",")
+        if origin
+    ],
+    allow_origin_regex=os.getenv("BACKEND_CORS_ORIGINS_REGEX") or None,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(api_router)
