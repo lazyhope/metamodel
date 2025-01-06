@@ -114,3 +114,6 @@ It is also possible to deploy frontend and backend separately using their respec
 ## API Documentation
 
 [Swagger UI](https://metamodel.onrender.com/docs)
+
+The doc server may take up to a minute to spin up due to inactivity on Render's free tier,
+see <https://render.com/docs/free#spinning-down-on-idle> for more information.
