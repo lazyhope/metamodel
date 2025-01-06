@@ -49,7 +49,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
    cd ../backend
    echo "BACKEND_CORS_ORIGINS=http://localhost,http://localhost:5173" > .env  # Set the CORS origins (separated by commas) or use * to allow all
    # Or use regex to specify CORS origins
-   echo "BACKEND_CORS_ORIGINS_REGEX=^https?://localhost(:\d+)?$" >> .env
+   echo 'BACKEND_CORS_ORIGINS_REGEX="^https?://localhost(:\d+)?$"' >> .env
 
    # Optionally, set the preset language model and token matching the frontend
    echo "PRESET_MODEL_NAME=your-model-name-here" >> .env
@@ -64,6 +64,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
    ```sh
    cd backend
+   source .env
    uvicorn app.main:app --host 0.0.0.0 --port 8000
    ```
 
@@ -71,6 +72,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
    ```sh
    cd frontend
+   source .env
    npm run dev
    ```
 
@@ -111,4 +113,4 @@ It is also possible to deploy frontend and backend separately using their respec
 
 ## API Documentation
 
-[Swagger UI](https://metamodel.vercel.app/docs)
+[Swagger UI](https://metamodel.onrender.com/docs)
