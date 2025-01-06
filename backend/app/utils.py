@@ -1,3 +1,5 @@
+import os
+
 import instructor
 from fastapi import HTTPException
 from instructor.exceptions import InstructorRetryException
@@ -17,6 +19,9 @@ from .models import T_Model
 disable_pydantic_error_url()
 aclient = instructor.from_litellm(acompletion, mode=instructor.Mode.MD_JSON)
 
+PRESET_MODEL_NAME = os.getenv("PRESET_MODEL_NAME", "")
+PRESET_TOKEN = os.getenv("PRESET_TOKEN", "")
+
 
 async def get_parsed_data(
     messages: list,
@@ -27,6 +32,8 @@ async def get_parsed_data(
     max_tokens: int | None = None,
     max_attempts: int = 3,
 ) -> T_Model:
+    if model == PRESET_MODEL_NAME and api_key == PRESET_TOKEN:
+        api_key = os.getenv("LITELLM_API_KEY", api_key)
     try:
         return await aclient.chat.completions.create(
             model=model,

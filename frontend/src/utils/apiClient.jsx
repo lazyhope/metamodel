@@ -5,17 +5,28 @@ const apiClient = axios.create({
   baseURL: API_ENDPOINT,
 });
 
+const processModelSettings = ({ model, apiKey }) => {
+  if (model === 'Preset Model') {
+    return {
+      model: import.meta.env.VITE_PRESET_MODEL_NAME,
+      apiKey: import.meta.env.VITE_PRESET_TOKEN
+    };
+  }
+  return { model, apiKey };
+};
+
 export const defineSchema = async ({ messages, model, temperature, max_tokens, max_attempts, apiKey }) => {
   try {
+    const { model: processedModel, apiKey: processedApiKey } = processModelSettings({ model, apiKey });
     const response = await apiClient.post('/define', {
       messages,
-      model,
+      model: processedModel,
       temperature,
       max_tokens,
       max_attempts,
     }, {
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${processedApiKey}`,
       },
     });
     return response.data;
@@ -26,16 +37,17 @@ export const defineSchema = async ({ messages, model, temperature, max_tokens, m
 
 export const parseData = async ({ messages, schema, model, temperature, max_tokens, max_attempts, apiKey }) => {
   try {
+    const { model: processedModel, apiKey: processedApiKey } = processModelSettings({ model, apiKey });
     const response = await apiClient.post('/parse', {
       messages,
       schema,
-      model,
+      model: processedModel,
       temperature,
       max_tokens,
       max_attempts,
     }, {
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${processedApiKey}`,
       },
     });
     return response.data;

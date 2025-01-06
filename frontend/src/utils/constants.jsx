@@ -87,17 +87,23 @@ export const DEFAULT_FIELD = {
 
 export const IMPORT_DIALOG_PLACEHOLDER = 'Paste your JSON schema here...';
 
+const isPresetModelAvailable = () => {
+    console.log(import.meta.env.VITE_PRESET_MODEL_NAME, import.meta.env.VITE_PRESET_TOKEN);
+    return import.meta.env.VITE_PRESET_MODEL_NAME && import.meta.env.VITE_PRESET_TOKEN;
+};
+
 export const MODEL_OPTIONS = [
-    'claude-3-5-sonnet-20240620',
+    ...(isPresetModelAvailable() ? ['Preset Model'] : []),
+    'claude-3-5-sonnet-2024-1022',
     'gemini/gemini-2.0-flash-exp',
     'gemini/gemini-1.5-pro-002',
     'gpt-4o',
     'gpt-4o-mini',
     'Custom Model',
-]
+];
 
 export const DEFAULT_MODEL_SETTINGS = {
-    model: 'gemini/gemini-2.0-flash-exp',
+    model: isPresetModelAvailable() ? 'Preset Model' : 'gemini/gemini-2.0-flash-exp',
     temperature: 0,
     max_tokens: 4096,
     max_attempts: 3,

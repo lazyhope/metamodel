@@ -25,7 +25,15 @@ const ModelSettingsDialog = ({ isModelSettingsOpen, setIsModelSettingsOpen, mode
 
     const handleModelChange = (value) => {
         setSelectedModel(value);
-        if (value !== 'Custom Model') {
+        if (value === 'Preset Model') {
+            // When preset model is selected, no need to set an API key
+            // The backend will handle authentication for preset model
+            setModelSettings(prev => ({
+                ...prev,
+                model: value,
+                apiKey: '' // Clear the API key as it's not needed for preset model
+            }));
+        } else if (value !== 'Custom Model') {
             setModelSettings(prev => ({ ...prev, model: value }));
         }
     };
@@ -34,6 +42,8 @@ const ModelSettingsDialog = ({ isModelSettingsOpen, setIsModelSettingsOpen, mode
         setCustomModel(value);
         setModelSettings(prev => ({ ...prev, model: value }));
     };
+
+    const showApiKeyInput = selectedModel !== 'Preset Model';
 
     return (
         <Dialog open={isModelSettingsOpen} onOpenChange={setIsModelSettingsOpen}>
@@ -78,29 +88,31 @@ const ModelSettingsDialog = ({ isModelSettingsOpen, setIsModelSettingsOpen, mode
                             />
                         </div>
                     )}
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="apiKey" className="text-right">
-                            API Key
-                        </Label>
-                        <div className="col-span-3 relative">
-                            <Input
-                                id="apiKey"
-                                type={showApiKey ? "text" : "password"}
-                                value={modelSettings.apiKey}
-                                onChange={(e) => handleChange('apiKey', e.target.value)}
-                                className="pr-10"
-                            />
-                            <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon"
-                                className="absolute right-0 top-0 h-full"
-                                onClick={() => setShowApiKey(!showApiKey)}
-                            >
-                                {showApiKey ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                            </Button>
+                    {showApiKeyInput && (
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="apiKey" className="text-right">
+                                API Key
+                            </Label>
+                            <div className="col-span-3 relative">
+                                <Input
+                                    id="apiKey"
+                                    type={showApiKey ? "text" : "password"}
+                                    value={modelSettings.apiKey}
+                                    onChange={(e) => handleChange('apiKey', e.target.value)}
+                                    className="pr-10"
+                                />
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="absolute right-0 top-0 h-full"
+                                    onClick={() => setShowApiKey(!showApiKey)}
+                                >
+                                    {showApiKey ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                                </Button>
+                            </div>
                         </div>
-                    </div>
+                    )}
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="temperature" className="text-right">
                             Temperature
