@@ -36,6 +36,10 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
    ```sh
    cd frontend
    echo "VITE_API_URL=http://localhost:8000" > .env  # Set the API URL
+
+   # Optionally, set the preset language model and token
+   echo "VITE_PRESET_MODEL_NAME=your-model-name-here" >> .env
+   echo "VITE_PRESET_TOKEN=your-token-here" >> .env  # Don't use real API keys here
    npm install
    ```
 
@@ -43,7 +47,14 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
    ```sh
    cd ../backend
-   echo "BACKEND_CORS_ORIGINS=http://localhost,http://localhost:5173" > .env  # Optional: set the CORS origins (separated by commas)
+   echo "BACKEND_CORS_ORIGINS=http://localhost,http://localhost:5173" > .env  # Set the CORS origins (separated by commas) or use * to allow all
+   # Or use regex to specify CORS origins
+   echo "BACKEND_CORS_ORIGINS_REGEX=^https?://localhost(:\d+)?$" >> .env
+
+   # Optionally, set the preset language model and token matching the frontend
+   echo "PRESET_MODEL_NAME=your-model-name-here" >> .env
+   echo "PRESET_TOKEN=your-token-here" >> .env  # Don't use real API keys here
+   echo "LITELLM_API_KEY=your-real-api-key-here" >> .env  # Use real API key here
    pip install -r requirements.txt
    ```
 
@@ -53,7 +64,7 @@ Built on top of [instructor](https://github.com/jxnl/instructor) and [pydantic](
 
    ```sh
    cd backend
-   uvicorn app.main:app --reload
+   uvicorn app.main:app --host 0.0.0.0 --port 8000
    ```
 
 2. In a new terminal, start the frontend development server:
@@ -74,11 +85,10 @@ See [frontend/README.md](frontend/README.md)
 To deploy the application using Docker:
 
 1. Ensure Docker and Docker Compose are installed on your system.
-2. Edit `.env` file in the root directory and set your environment variables, for example:
+2. Edit `.env` file in the root directory and set your environment variables, see [.env.example](.env.example) for reference.
 
    ```sh
-   VITE_API_URL=http://localhost:8000
-   BACKEND_CORS_ORIGINS="http://localhost,http://localhost:5173"
+   cp .env.example .env
    ```
 
 3. Run the following command in the root directory:

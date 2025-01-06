@@ -9,7 +9,6 @@ RUN npm ci
 
 COPY . /app
 
-# For deploying frontend independently
 ARG VITE_API_URL=${VITE_API_URL}
 
 RUN npm run build

@@ -9,6 +9,10 @@ services:
       - .env
     environment:
       - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
+      - BACKEND_CORS_ORIGINS_REGEX=${BACKEND_CORS_ORIGINS_REGEX}
+      - PRESET_MODEL_NAME=${PRESET_MODEL_NAME}
+      - PRESET_TOKEN=${PRESET_TOKEN}
+      - LITELLM_API_KEY=${LITELLM_API_KEY}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 60s
@@ -22,6 +26,11 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
         - NODE_ENV=production
+    env_file:
+      - .env
+    environment:
+      - VITE_PRESET_MODEL_NAME=${PRESET_MODEL_NAME}
+      - VITE_PRESET_TOKEN=${PRESET_TOKEN}
     ports:
       - "80:80"
     depends_on:
